@@ -17,8 +17,10 @@ var timer = 5;
 
 function startGame(){
   //initialize game variables
+  pattern = [];
   makePattern(1,4);
   clueHoldTime = 1000;
+  strikeCounter = 0;
   timer = 5;
   progress = 0;
   gamePlaying = true;
@@ -98,12 +100,11 @@ function guess(btn){
     }
   } else {
     strikeCounter++;
+    stopTime();
     if (strikeCounter < 3) {
       alert("Strike! You are at " + strikeCounter + " Strikes.\nThree Strikes and it's Game Over!");
-      stopTime();
       playClueSequence();
     } else if (strikeCounter == 3) {
-      stopTime();
       loseGame();
     }
   }
@@ -124,8 +125,14 @@ function tick() {
   timer -= 1;
     
   if (timer == -1) {
-    loseGame();
+    strikeCounter++;
     stopTime();
+    if (strikeCounter < 3) {
+      alert("Strike! You are at " + strikeCounter + " Strikes.\nThree Strikes and it's Game Over!");
+      playClueSequence();
+    } else if (strikeCounter == 3) {
+      loseGame();
+    }
   }
 }
 
